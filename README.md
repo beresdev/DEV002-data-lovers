@@ -568,4 +568,4 @@ Para el deploy, cada una lo realizó desde su repositorio remoto.
 ### 👩🏻‍💻 Berenice Hernández
 
 * GitHub: [beresdev/DEV002-data-lovers](https://github.com/beresdev/DEV002-data-lovers)
-* Deploy: [✨Harry Potter's Wizarding World✨]()
+* Deploy: [✨Harry Potter's Wizarding World✨](https://beresdev.github.io/DEV002-data-lovers/)
