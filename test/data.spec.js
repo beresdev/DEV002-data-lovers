@@ -6,110 +6,35 @@ const data =
       {
         "id": 1,
         "name": "Euan Abercrombie",
-        "birth": "between 1 September 1983 and 31 August 1984",
-        "death": null,
-        "species": "Human",
-        "ancestry": null,
         "gender": "Male",
-        "hair_color": null,
-        "eye_color": null,
-        "wand": null,
-        "patronus": null,
         "house": "Gryffindor",
-        "associated_groups": ["Hogwarts School of Witchcraft and Wizardry", "Gryffindor"],
-        "books_featured_in": [5]
+      },
+      {
+        "id": 2,
+        "name": "Stewart Ackerley",
+        "gender": "Male",
+        "house": "Ravenclaw",
       },
       {
         "id": 231,
         "name": "Silvanus Kettleburn",
-        "birth": "22 November, before 1927[citation needed]",
-        "death": "Between 2 May, 1998 and 22 November, 2014",
-        "species": "Human",
-        "ancestry": "Pure-blood or half-blood",
         "gender": "Male",
-        "hair_color": "Silver",
-        "eye_color": "Brown",
-        "wand": "Chestnut and phoenix feather, 11½\", whippy",
-        "patronus": null,
         "house": "Hufflepuff",
-        "associated_groups": ["Hogwarts School of Witchcraft and Wizardry", "Hufflepuff", "Kettleburn family"],
-        "books_featured_in": [3]
-
       },
       {
         "id": 496,
         "name": "Zoo director",
-        "birth": null,
-        "death": null,
-        "species": "Human",
-        "ancestry": "Muggle",
         "gender": "Male",
-        "hair_color": null,
-        "eye_color": null,
-        "wand": null,
-        "patronus": null,
         "house": null,
-        "associated_groups": ["Zoo"],
-        "books_featured_in": [1]
-      },
-      {
-        "id": 618,
-        "name": "Aged witch",
-        "birth": null,
-        "death": null,
-        "species": "Human",
-        "ancestry": null,
-        "gender": "Female",
-        "hair_color": null,
-        "eye_color": null,
-        "wand": null,
-        "patronus": null,
-        // "house": null,
-        "associated_groups": ["Knockturn Alley"],
-        "books_featured_in": [2]
       },
       {
         "id": 630,
         "name": "Mafalda",
-        "birth": "between 1 September 1982 and 31 August 1983, Great Britain or Ireland",
-        "death": null,
-        "species": "Human",
-        "ancestry": "Muggle-born or Half-blood (possibly)",
         "gender": "Female",
-        "hair_color": null,
-        "eye_color": null,
-        "wand": null,
-        "patronus": null,
         "house": "Slytherin",
-        "associated_groups": ["Prewett family", "Weasley Family", "Slytherin", "Hogwarts School of Witchcraft and Wizardry"],
-        "books_featured_in": [4]
       }
     ]
   }
-
-  const array = [
-    {
-      house: 'Gryffindor' ,
-      name: "Euan Abercrombie"
-    },
-    {
-      house: "Hufflepuff",
-      name: "Silvanus Kettleburn"
-    },
-    {
-      house: null,
-      name: "Zoo director"
-    },
-    {
-      house: undefined, 
-      name: "Aged witch"
-    },
-
-    {
-      house: "Slytherin",
-      name: "Mafalda"
-    }
-  ]
 
 describe('getCharactersFrom', () => {
   it('is a function', () => {
@@ -133,10 +58,10 @@ describe('createArrayObjects', () => {
 
   it('should return an array of objects with name and house properties only even if a property does not exist', () => {
     expect(createArrayObjects(data)).toEqual ([
-      {"gender":"Male", "house": "Gryffindor", "name": "Euan Abercrombie"}, 
+      {"gender":"Male", "house": "Gryffindor", "name": "Euan Abercrombie"},
+      {"gender":"Male", "house": "Ravenclaw", "name": "Stewart Ackerley"},
       {"gender":"Male","house": "Hufflepuff", "name": "Silvanus Kettleburn"}, 
       {"gender":"Male","house": null, "name": "Zoo director"}, 
-      {"gender":"Female","house": undefined, "name": "Aged witch" },
       {"gender":"Female","house": "Slytherin", "name": "Mafalda"},
     ])
   });
@@ -154,26 +79,30 @@ describe ('filterCompare', () => {
   });
 
   it('should compare every element of an array with an string', () => {
-    expect(filterCompare(array, 'euan')).toEqual([
+    expect(filterCompare(data.characters, 'euan')).toEqual([
       {
-        house: 'Gryffindor' ,
-        name: "Euan Abercrombie"
+        "id": 1,
+        "gender":"Male", 
+        "house": "Gryffindor", 
+        "name": "Euan Abercrombie"
       }
-    ])
+    ]);
 
-    expect(filterCompare(array, 'ZOO')).toEqual(
+    expect(filterCompare(data.characters, 'ZOO')).toEqual(
       [
-      {
-        house: null,
-        name: "Zoo director"
-      }
-      ])
-    
-    expect(filterCompare(array, 'A')).toMatchObject([
-      {house: "Gryffindor",name: "Euan Abercrombie"}, 
-      {house: "Hufflepuff", name: "Silvanus Kettleburn"},
-      {house: undefined, name: "Aged witch" },
-      {house: "Slytherin", name: "Mafalda"}
+        {
+          "id": 496,
+          "name": "Zoo director",
+          "gender": "Male",
+          "house": null,
+        }
+      ]);
+
+    expect(filterCompare(data.characters, 'A')).toEqual([
+      {"gender":"Male", "house": "Gryffindor", "id": 1, "name": "Euan Abercrombie"},
+      {"gender":"Male", "house": "Ravenclaw", "id": 2,"name": "Stewart Ackerley"},
+      {"gender":"Male","house": "Hufflepuff", "id": 231,"name": "Silvanus Kettleburn"}, 
+      {"gender":"Female","house": "Slytherin", "id": 630,"name": "Mafalda"},
     ])
   });
 
@@ -184,78 +113,23 @@ describe ('filterCompare', () => {
 });
 
 describe("filter characters in ascendent sort", () => {
-  test("is function", () => {
+  it("is function", () => {
     expect(typeof(filterAscendent)).toBe('function');
   });
 
-  test("sort list", () => {
-    //given
-    const arrayData = {
-      characters: [
-        {
-          house: "Gryffindor",
-          name: "Euan Abercrombie",
-        },
-        {
-          house: "Ravenclaw",
-          name: "Stewart Ackerley",
-        },
-        {
-          house: null,
-          name: "African prince",
-        },
-        {
-          house: null,
-          name: "Agnes's son",
-        },
-        {
-          house: null,
-          name: "Cornelius Agrippa",
-        },
-        {
-          house: null,
-          name: "Albino peacock",
-        },
-      ],
-    };
+  it("sort list", () => {
+    let result = filterAscendent(data.characters);
 
-    const expectedArrayData = {
-      characters: [
-        {
-          house: null,
-          name: "African prince",
-        },
-        {
-          house: null,
-          name: "Agnes's son",
-        },
-        {
-          house: null,
-          name: "Albino peacock",
-        },
-        {
-          house: null,
-          name: "Cornelius Agrippa",
-        },
-        {
-          house: "Gryffindor",
-          name: "Euan Abercrombie",
-        },
-        {
-          house: "Ravenclaw",
-          name: "Stewart Ackerley",
-        },
-      ],
-    };
-
-    //when
-    let result = filterAscendent(arrayData.characters);
-
-    //then
-    expect(result).toStrictEqual(expectedArrayData.characters);
+    expect(result).toEqual([
+      {"gender":"Male", "house": "Gryffindor", "id": 1, "name": "Euan Abercrombie"},
+      {"gender":"Female","house": "Slytherin", "id": 630,"name": "Mafalda"},
+      {"gender":"Male","house": "Hufflepuff", "id": 231,"name": "Silvanus Kettleburn"}, 
+      {"gender":"Male", "house": "Ravenclaw", "id": 2,"name": "Stewart Ackerley"},
+      {"gender":"Male","house": null,  "id": 496,"name":"Zoo director"} 
+    ])
   });
 
-  test("should throw TypeError when invoked with wrong argument types", ()=> {
+  it("should throw TypeError when invoked with wrong argument types", ()=> {
     expect(() => filterAscendent(undefined)).toThrow(TypeError);
     expect(() => filterAscendent(null)).toThrow(TypeError);
   })
@@ -267,78 +141,22 @@ describe("filter characters in descendent sort", () => {
   });
 
   test("sort list", () => {
-    //given
-    const arrayData = {
-      characters: [
-        {
-          house: "Gryffindor",
-          name: "Euan Abercrombie",
-        },
-        {
-          house: "Ravenclaw",
-          name: "Stewart Ackerley",
-        },
-        {
-          house: null,
-          name: "African prince",
-        },
-        {
-          house: null,
-          name: "Agnes's son",
-        },
-        {
-          house: null,
-          name: "Cornelius Agrippa",
-        },
-        {
-          house: null,
-          name: "Albino peacock",
-        },
-      ],
-    };
 
-    const expectedArrayData = {
-      characters: [
-        {
-          house: "Ravenclaw",
-          name: "Stewart Ackerley",
-        },
-        {
-          house: "Gryffindor",
-          name: "Euan Abercrombie",
-        },
-        {
-          house: null,
-          name: "Cornelius Agrippa",
-        },
-        {
-          house: null,
-          name: "Albino peacock",
-        },
-        {
-          house: null,
-          name: "Agnes's son",
-        },
-        {
-          house: null,
-          name: "African prince",
-        },
-      ],
-    };
+    let result = filterDescendent(data.characters);
 
-    //when
-    let result = filterDescendent(arrayData.characters);
-
-    //then
-    expect(result).toStrictEqual(expectedArrayData.characters);
-    expect(() => filterDescendent(undefined)).toThrow(TypeError);
-    expect(() => filterDescendent(null)).toThrow(TypeError);
+    expect(result).toEqual([
+      {"gender":"Male","house": null,  "id": 496,"name":"Zoo director"},
+      {"gender":"Male", "house": "Ravenclaw", "id": 2,"name": "Stewart Ackerley"},
+      {"gender":"Male","house": "Hufflepuff", "id": 231,"name": "Silvanus Kettleburn"}, 
+      {"gender":"Female","house": "Slytherin", "id": 630,"name": "Mafalda"},
+      {"gender":"Male", "house": "Gryffindor", "id": 1, "name": "Euan Abercrombie"}
+    ])
   });
 
   test("should throw TypeError when invoked with wrong argument types", ()=> {
     expect(() => filterDescendent(undefined)).toThrow(TypeError);
     expect(() => filterDescendent(null)).toThrow(TypeError);
-  })
+  });
 });
 
 describe ("countMale", () => {
@@ -347,14 +165,13 @@ describe ("countMale", () => {
   });
 
   it('should returns 3', () => {
-    expect(countMale(data.characters)).toBe(3)
+    expect(countMale(data.characters)).toBe(4)
   });
 
   it('should throw TypeError when invoked with wrong argument types', () => {
     expect(() => countMale(undefined)).toThrow(TypeError);
     expect(() => countMale(null)).toThrow(TypeError);
-  })
-
+  });
 });
 
 describe ("countFemale", () => {
@@ -363,7 +180,7 @@ describe ("countFemale", () => {
   });
 
   it('should returns 2', () => {
-    expect(countFemale(data.characters)).toBe(2)
+    expect(countFemale(data.characters)).toBe(1)
   });
 
   it('should throw TypeError when invoked with wrong argument types', () => {
